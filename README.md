@@ -56,14 +56,13 @@ The dataset is provided by Figure Eight and consists of:
 The web application:
 
 
-![Screen Shot 2021-01-11 at 01.03.14.png](https://www.dropbox.com/s/29fidajr646o2pn/01.png)
-
+![Screen Shot 2021-01-11 at 01.03.14.png](01.png)
 
 When a disaster message is submitted and the Classify Message button is clicked, the app shows how the message is classified by highlighting the categories in green. 
 For the suggested message "we are more than 50 people on the street. Please help us find tent and food" we get the following categories: 
 
 
-![Screen Shot 2021-03-01 at 16.15.41.png](https://www.dropbox.com/s/xqraqb32rj5r9xv/02.png)
+![Screen Shot 2021-03-01 at 16.15.41.png](02.png)
 
 
 
