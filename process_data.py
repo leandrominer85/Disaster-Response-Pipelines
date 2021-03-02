@@ -3,7 +3,14 @@ import pandas as pd
 from sqlalchemy import create_engine
 
 def load_data(messages_filepath, categories_filepath):
-       #Read the dfs
+    '''
+    INPUTS:
+    - message database file path
+    - categories database file path
+    OUTPUT:
+    - merged dataframe
+
+    '''
     df1 = pd.read_csv(messages_filepath)
     df2 = pd.read_csv(categories_filepath)
     
@@ -13,6 +20,16 @@ def load_data(messages_filepath, categories_filepath):
     return df
 
 def clean_data(df):
+
+     '''
+    INPUTS:
+    - loaded dataframe
+
+    OUTPUT:
+    - Cleaned dataframe with the categories splited in several columns and with droped duplicates 
+
+    '''
+
     # create a dataframe of the 36 individual category columns
     categories = df['categories'].str.split(';', expand=True)
 
@@ -39,6 +56,15 @@ def clean_data(df):
 
 
 def save_data(df, database_filename = 'disaster'):
+
+        '''
+    INPUTS:
+    - Cleaned dataframe
+    - Name for the database (str)
+    OUTPUT:
+    - Database with SQL format
+
+    '''
     
     engine = create_engine('sqlite:///{}'.format(database_filename))
     df.to_sql('{}'.format('disaster'), engine, index=False)

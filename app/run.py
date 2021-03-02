@@ -1,7 +1,7 @@
 import json
 import plotly
 import pandas as pd
-
+from sklearn.ensemble import  AdaBoostClassifier
 from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import word_tokenize
 import sqlite3
@@ -60,6 +60,26 @@ def index():
                 },
                 'xaxis': {
                     'title': "Genre"
+                }
+            }
+        },
+     {
+            'data': [
+                Bar(
+                    x= category_names,
+                    y= category_bool
+                )
+            ],
+            'layout': {
+                'title': 'Distribution of Categories across Messages',
+                'yaxis':{
+                    'title':"Count"
+                }, 
+                'xaxis': {
+                    'title':"Categories"
+                    
+                
+                    
                 }
             }
         }

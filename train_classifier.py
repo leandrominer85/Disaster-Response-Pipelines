@@ -15,8 +15,18 @@ from sklearn.pipeline import Pipeline , FeatureUnion
 from sklearn.metrics import classification_report, f1_score, make_scorer, fbeta_score
 from sklearn.model_selection import GridSearchCV, RandomizedSearchCV
 import pickle
+from nltk.stem.porter import PorterStemmer
 
 def load_data(database_filepath = '/home/worspace/data/DisasterResponse.db'):
+
+    '''
+    INPUTS:
+    - Filepath to the database
+    
+    OUTPUT:
+    - category_names: categories names from the dataframe, X: text messages from the dataframe, Y: column names (categories)
+
+    '''
  
     # load data from database
     conn = sqlite3.connect(f"{database_filepath}")
@@ -36,6 +46,17 @@ def load_data(database_filepath = '/home/worspace/data/DisasterResponse.db'):
 
 
 def tokenize(text):
+
+
+    '''
+    INPUTS:
+    - Text (str) input
+    
+    OUTPUT:
+    - Tokenized, stemmed and lemmed text 
+
+    '''
+
     tokens = word_tokenize(re.sub(r"[^a-zA-Z0-9]", " ", text.lower()).replace("  ",""))
     words = [w for w in tokens if w not in stopwords.words("english")]
     
@@ -52,21 +73,54 @@ def tokenize(text):
 
 def build_model():
 
+
+    '''
+    
+    OUTPUT:
+    - A pipeline that uses cross validation with AdaboostClassifier after the text transformation with
+     CountVectorizer(tokenizer=tokenize) and TfidfTransformer(). The scoring metric is the f1_micro
+
+    '''
+
     pipeline = Pipeline([
             ('features', FeatureUnion([
 
                 ('text_pipeline', Pipeline([
-                    ('vect', CountVectorizer()),
+                    ('vect', CountVectorizer(tokenizer=tokenize)),
                     ('transformer', TfidfTransformer())
                 ]))
             ])),
-            ('clf', MultiOutputClassifier(AdaBoostClassifier(algorithm = 'SAMME.R', learning_rate = 1, n_estimators = 50)))
+            ('clf', MultiOutputClassifier(AdaBoostClassifier()))
         ])
 
-    return pipeline
+
+    learning_rate =[0.5,1 ]
+    n_estimators = [50,100] 
+    algorithm = ['SAMME', 'SAMME.R']
+    parameters_grid    = dict(clf__estimator__learning_rate= learning_rate,
+                              clf__estimator__n_estimators=n_estimators,clf__estimator__algorithm=algorithm)
+    pipe_cv = GridSearchCV(pipeline, param_grid=parameters_grid, scoring='f1_micro', n_jobs=-1)
+
+
+
+
+
+    return pipe_cv
 
 
 def evaluate_model(model, X_test, Y_test, category_names):
+
+
+    '''
+    INPUTS:
+    - The saved model
+    - The array for the train test
+    - The dataframe for the train test
+    
+    OUTPUT:
+    - Prints the classification report for model  and Fbetascore
+
+    '''    
     
     y_pred = model.predict(X_test)
     print(classification_report(Y_test, y_pred, target_names=category_names))
@@ -75,6 +129,17 @@ def evaluate_model(model, X_test, Y_test, category_names):
 
 
 def save_model(model, model_filepath):
+
+    '''
+    INPUTS:
+    - The pipeline model
+    - The filepath to save the model
+    
+    
+    OUTPUT:
+    - saved model
+
+    ''' 
         pickle.dump(model, open(model_filepath, "wb"))
 
 
