@@ -4,13 +4,13 @@ import pandas as pd
 
 from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import word_tokenize
-
+import sqlite3
 from flask import Flask
 from flask import render_template, request, jsonify
 from plotly.graph_objs import Bar
-
-import sqlite3
 import joblib
+from sqlalchemy import create_engine
+
 
 app = Flask(__name__)
 
@@ -26,14 +26,10 @@ def tokenize(text):
     return clean_tokens
 
 # load data
-conn = sqlite3.connect(r'E:\Dropbox\Pessoal\Python\Udacity\Disaster-Response-Pipelines\databases\Disaster.db')
-
-
-df = pd.read_sql('SELECT * FROM Disaster', con = conn)
-
-
+conn = sqlite3.connect("../databases/DisasterResponse.db")
+df = pd.read_sql('select * from disaster', con = conn)
 # load model
-model = joblib.load(r'E:\Dropbox\Pessoal\Python\Udacity\Disaster-Response-Pipelines\models\cv_Adabosst.pkl')
+model = joblib.load("../models/classifier.pkl")
 
 
 # index webpage displays cool visuals and receives user input text for model
