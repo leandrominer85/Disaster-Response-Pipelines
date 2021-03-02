@@ -11,6 +11,16 @@ The goal of this project is to apply data engineering skills to analyze a datase
  - **Web development**: deploy a web application that classifies messages.
  
 
+## Table of Contents
+
+- [Software & Libraries](##Software-&-Libraries)
+- [Data](##Data)
+- [Instructions](##Instructions)
+- [Results](##Results)
+- [Licensing and Acknowledgements](##Licensing-and-Acknowledgements)
+
+
+
 ## Software & Libraries
 
 The project uses Python 3 and the following libraries:
@@ -46,14 +56,14 @@ The dataset is provided by Figure Eight and consists of:
 The web application:
 
 
-![Screen Shot 2021-01-11 at 01.03.14.png](https://www.dropbox.com/s/29fidajr646o2pn/01.png?dl=0)
+![Screen Shot 2021-01-11 at 01.03.14.png](https://www.dropbox.com/s/29fidajr646o2pn/01.png)
 
 
 When a disaster message is submitted and the Classify Message button is clicked, the app shows how the message is classified by highlighting the categories in green. 
 For the suggested message "we are more than 50 people on the street. Please help us find tent and food" we get the following categories: 
 
 
-![Screen Shot 2021-03-01 at 16.15.41.png](https://www.dropbox.com/s/xqraqb32rj5r9xv/02.png?dl=0)
+![Screen Shot 2021-03-01 at 16.15.41.png](https://www.dropbox.com/s/xqraqb32rj5r9xv/02.png)
 
 
 
