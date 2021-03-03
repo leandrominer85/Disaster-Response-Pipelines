@@ -46,6 +46,8 @@ def load_data(database_filepath = '/home/worspace/data/DisasterResponse.db'):
 
 
 def tokenize(text):
+    from nltk.corpus import stopwords # This import is here due to a error:
+     # (https://stackoverflow.com/questions/44911539/pickle-picklingerror-args0-from-newobj-args-has-the-wrong-class-with-hado)
 
 
     '''
@@ -53,20 +55,17 @@ def tokenize(text):
     - Text (str) input
     
     OUTPUT:
-    - Tokenized, stemmed and lemmed text 
+    - Tokenized and lemmed text 
 
     '''
 
     tokens = word_tokenize(re.sub(r"[^a-zA-Z0-9]", " ", text.lower()).replace("  ",""))
     words = [w for w in tokens if w not in stopwords.words("english")]
     
-
-    # Reduce words to their stems
-    stemmed = [PorterStemmer().stem(w) for w in words]
     
     # Reduce words to their stems
     
-    lemmed = [WordNetLemmatizer().lemmatize(w) for w in stemmed]
+    lemmed = [WordNetLemmatizer().lemmatize(w) for w in words]
     
     return lemmed 
 
@@ -140,7 +139,7 @@ def save_model(model, model_filepath):
     - saved model
 
     ''' 
-        pickle.dump(model, open(model_filepath, "wb"))
+    pickle.dump(model, open(model_filepath, "wb"))
 
 
 def main():

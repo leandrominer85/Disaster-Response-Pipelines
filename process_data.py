@@ -51,6 +51,9 @@ def clean_data(df):
     
     # drop duplicates
     df.drop_duplicates(['id'],inplace=True)
+
+    #relabel the rows with not binary values
+    df['related'] = df.loc[df['related'] == 2] = 1
     
     return df
 
