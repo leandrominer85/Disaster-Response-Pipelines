@@ -21,7 +21,7 @@ def load_data(messages_filepath, categories_filepath):
 
 def clean_data(df):
 
-     '''
+    '''
     INPUTS:
     - loaded dataframe
 
@@ -57,7 +57,7 @@ def clean_data(df):
 
 def save_data(df, database_filename = 'disaster'):
 
-        '''
+    '''
     INPUTS:
     - Cleaned dataframe
     - Name for the database (str)
